@@ -1,0 +1,43 @@
+
+function sanitizeAndProcessInput(input) {
+    // Validate input type
+    if (input === null || input === undefined) {
+        throw new Error('Input cannot be null or undefined');
+    }
+
+    // Convert to string if not already
+    const stringInput = String(input).trim();
+
+    // Check if empty after trimming
+    if (stringInput.length === 0) {
+        throw new Error('Input cannot be empty');
+    }
+
+    // Remove special characters and numbers, keep only letters and spaces
+    const sanitized = stringInput.replace(/[^a-zA-Z\s]/g, '').trim();
+
+    // Verify result is not empty after sanitization
+    if (sanitized.length === 0) {
+        throw new Error('Input must contain at least one letter');
+    }
+
+    // Convert to camelCase
+    const words = sanitized.split(/\s+/);
+    const camelCased = words
+        .map((word, index) => {
+            const lower = word.toLowerCase();
+            return index === 0 ? lower : lower.charAt(0).toUpperCase() + lower.slice(1);
+        })
+        .join('');
+
+    return camelCased;
+}
+
+// Example usage:
+// console.log(sanitizeAndProcessInput('Hello World')); // "helloWorld"
+// console.log(sanitizeAndProcessInput('Test@123 Input!')); // "testInput"
+// console.log(sanitizeAndProcessInput('123')); // throws error
+git add .
+git commit
+git push
+git status
